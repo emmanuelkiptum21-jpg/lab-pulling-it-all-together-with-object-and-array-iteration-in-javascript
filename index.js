@@ -114,3 +114,93 @@ function gameObject() {
         },
     };
 }
+
+function findPlayer(playerName) {
+    const game = gameObject();
+    const sides = Object.keys(game);
+
+    for (let i = 0; i < sides.length; i++) {
+        const players = game[sides[i]].players;
+        if (players[playerName]) {
+            return players[playerName];
+        }
+    }
+}
+
+function numPointsScored(playerName) {
+    const player = findPlayer(playerName);
+    return player && player.points;
+}
+
+function shoeSize(playerName) {
+    const player = findPlayer(playerName);
+    return player && player.shoe;
+}
+
+function teamColors(teamName) {
+    const game = gameObject();
+    const sides = Object.keys(game);
+
+    for (let i = 0; i < sides.length; i++) {
+        const team = game[sides[i]];
+        if (team.teamName === teamName) {
+            return team.colors;
+        }
+    }
+}
+
+function teamNames() {
+    const game = gameObject();
+    const sides = Object.keys(game);
+    const names = [];
+
+    for (let i = 0; i < sides.length; i++) {
+        names.push(game[sides[i]].teamName);
+    }
+
+    return names;
+}
+
+function playerNumbers(teamName) {
+    const game = gameObject();
+    const sides = Object.keys(game);
+
+    for (let i = 0; i < sides.length; i++) {
+        const team = game[sides[i]];
+        if (team.teamName === teamName) {
+            const players = Object.keys(team.players);
+            const numbers = [];
+
+            for (let j = 0; j < players.length; j++) {
+                numbers.push(team.players[players[j]].number);
+            }
+
+            return numbers;
+        }
+    }
+}
+
+function playerStats(playerName) {
+    return findPlayer(playerName);
+}
+
+function bigShoeRebounds() {
+    const game = gameObject();
+    const sides = Object.keys(game);
+    let largestShoe = -1;
+    let rebounds;
+
+    for (let i = 0; i < sides.length; i++) {
+        const players = Object.keys(game[sides[i]].players);
+
+        for (let j = 0; j < players.length; j++) {
+            const player = game[sides[i]].players[players[j]];
+            if (player.shoe > largestShoe) {
+                largestShoe = player.shoe;
+                rebounds = player.rebounds;
+            }
+        }
+    }
+
+    return rebounds;
+}
